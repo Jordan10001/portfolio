@@ -109,11 +109,6 @@ export default function Navbar({
 
           {/* Mute/Unmute audio button */}
           <div className="flex items-center gap-2 ml-2">
-            {!isMuted && currentTrackName && (
-              <span className="hidden xl:inline-block font-mono text-[10px] font-bold border-2 border-black bg-yellow-100 px-2.5 py-1.5 uppercase tracking-wider animate-pulse shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                🎵 NOW PLAYING: {currentTrackName}
-              </span>
-            )}
             <AudioControl
               isMuted={isMuted}
               onToggleMute={onToggleMute}
