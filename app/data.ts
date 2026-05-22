@@ -27,11 +27,11 @@ export const PORTFOLIO_OWNER = {
 
 export const PROJECTS_DATA: Project[] = [
   {
-    id: "coming soon1",
-    name: "coming soon",
-    description: "coming soon",
-    image: "projects/coming-soon.png", 
-    badges: ["Database", "Cpu", "FileText", "Share2"],
+    id: "project1",
+    name: "my-ip",
+    description: "Advanced Geolocation IP lookup and network diagnostic dashboard.",
+    image: "projects/my-ip.png", 
+    badges: ["Next.js", "API", "TS"],
     githubUrl: "https://github.com/jordan1001",
     demoUrl: ""
   },
