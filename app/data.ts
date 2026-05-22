@@ -32,7 +32,7 @@ export const PROJECTS_DATA: Project[] = [
     description: "Advanced Geolocation IP lookup and network diagnostic dashboard.",
     image: "projects/my-ip.png", 
     badges: ["Next.js", "API", "TS"],
-    githubUrl: "https://github.com/jordan1001/my-ip",
+    githubUrl: "https://github.com/jordan10001/my-ip",
     demoUrl: "https://my-ip.jordan10001.workers.dev/"
   },
   {
@@ -41,7 +41,7 @@ export const PROJECTS_DATA: Project[] = [
     description: "coming soon",
     image: "projects/coming-soon.png", 
     badges: ["Database", "Cpu", "FileText", "Share2"],
-    githubUrl: "https://github.com/jordan1001",
+    githubUrl: "https://github.com/jordan10001",
     demoUrl: ""
   },
   {
@@ -50,7 +50,7 @@ export const PROJECTS_DATA: Project[] = [
     description: "coming soon",
     image: "projects/coming-soon.png", 
     badges: ["Database", "Cpu", "FileText", "Share2"],
-    githubUrl: "https://github.com/jordan1001",
+    githubUrl: "https://github.com/jordan10001",
     demoUrl: ""
   },
   {
@@ -59,7 +59,7 @@ export const PROJECTS_DATA: Project[] = [
     description: "coming soon",
     image: "projects/coming-soon.png", 
     badges: ["Database", "Cpu", "FileText", "Share2"],
-    githubUrl: "https://github.com/jordan1001",
+    githubUrl: "https://github.com/jordan10001",
     demoUrl: ""
   }
 ];
