@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import { Search, RefreshCw } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 
 interface ContributionDay {
   date: string;
@@ -38,7 +38,6 @@ export default function GithubHeatmap({ defaultUsername, accentClass }: GithubHe
     const contributions: ContributionDay[] = [];
     const today = new Date();
     const totalByYear: { [year: string]: number } = {};
-    let totalSum = 0;
 
     for (let i = 365; i >= 0; i--) {
       const d = new Date(today);
@@ -71,7 +70,6 @@ export default function GithubHeatmap({ defaultUsername, accentClass }: GithubHe
 
       contributions.push({ date: dateString, count, level });
       totalByYear[year] = (totalByYear[year] || 0) + count;
-      totalSum += count;
     }
 
     return {
@@ -246,7 +244,7 @@ export default function GithubHeatmap({ defaultUsername, accentClass }: GithubHe
 
       {errorStatus && (
         <div className="mb-6 border-3 border-dashed border-yellow-600 bg-yellow-50 p-3 font-mono text-xs font-bold text-yellow-800 text-left">
-          💡 {errorStatus} (Simulating matrix visual layout cleanly)
+           {errorStatus} (Simulating matrix visual layout cleanly)
         </div>
       )}
 
@@ -255,7 +253,7 @@ export default function GithubHeatmap({ defaultUsername, accentClass }: GithubHe
         <div>
           <div className="inline-block bg-[#FFFF00] border-4 border-black px-4 py-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] -rotate-1 select-all">
             <span className="font-space font-black text-lg sm:text-xl uppercase tracking-tight text-black">
-              {username.toUpperCase()}'S ACTIVITY (LAST 365 DAYS)
+              {username.toUpperCase()}&apos;S ACTIVITY (LAST 365 DAYS)
             </span>
           </div>
         </div>

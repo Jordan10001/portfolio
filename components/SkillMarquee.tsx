@@ -9,7 +9,7 @@ interface SkillMarqueeProps {
 export default function SkillMarquee({ skills = [] }: SkillMarqueeProps) {
   // Safe helper to resolve Lucide Icon dynamically
   const renderSkillIcon = (iconName: string, className = "text-black h-8 w-8") => {
-    const IconComponent = (Icons as any)[iconName];
+    const IconComponent = (Icons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[iconName];
     if (IconComponent) {
       return <IconComponent className={className} />;
     }

@@ -20,7 +20,7 @@ export default function ContactCard({
 }: ContactCardProps) {
   // Safe helper to resolve Lucide Icon dynamically
   const renderIcon = (name: string, className = "text-black h-8 w-8") => {
-    const IconComponent = (Icons as any)[name];
+    const IconComponent = (Icons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[name];
     if (IconComponent) {
       return <IconComponent className={className} />;
     }

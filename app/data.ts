@@ -105,14 +105,14 @@ export const CERTIFICATES_DATA: Certificate[] = [
 export const PLAYLIST_DATA = [
   {
     name: "Slab_Geometry",
-    url: "audio/slab_geometry.mp3"
+    url: "/audio/slab_geometry.mp3"
   },
   {
     name: "load Bearing",
-    url: "audio/load_bearing.mp3"
+    url: "/audio/load_bearing.mp3"
   },
   {
     name: "Monolith Glass",
-    url: "audio/monolith_glass.mp3"
+    url: "/audio/monolith_glass.mp3"
   }
 ];

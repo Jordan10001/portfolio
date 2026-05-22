@@ -56,7 +56,7 @@ export default function ProjectCard({ project, colorIndex }: ProjectCardProps) {
           )}
           {/* Flat line graphics */}
           <div className="absolute bottom-2 left-3 font-mono text-xs font-black text-black tracking-widest bg-white border border-black px-1.5 py-0.5 z-10">
-            // LIVE_PROJ
+            {"// LIVE_PROJ"}
           </div>
         </div>
 

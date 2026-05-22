@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Navbar from "../components/Navbar";
+import WelcomeScreen from "../components/WelcomeScreen";
 import { ThemeProvider, useTheme } from "./theme-context";
 import { PLAYLIST_DATA } from "./data";
 import { ArrowUp, ToggleLeft, ToggleRight, MousePointer2 } from "lucide-react";
@@ -10,7 +11,7 @@ import { motion, AnimatePresence } from "motion/react";
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const { activeColorTheme, setActiveColorTheme, accentClass, containerClass } = useTheme();
+  const { activeColorTheme, setActiveColorTheme, containerClass } = useTheme();
 
   const [isMounted, setIsMounted] = useState(false);
   const [cursorPosition, setCursorPosition] = useState({ x: -100, y: -100 });
@@ -18,12 +19,50 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [hasEntered, setHasEntered] = useState(false);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    setIsMounted(true);
+    const timer = setTimeout(() => {
+      setIsMounted(true);
+    }, 0);
+    return () => clearTimeout(timer);
   }, []);
+
+  // Reset scroll position to top on route change (fixes Next.js scroll restoration with Framer Motion transitions)
+  useEffect(() => {
+    if (!isMounted) return;
+    window.scrollTo(0, 0);
+  }, [pathname, isMounted]);
+
+  // Prevent scroll when welcome screen is active
+  useEffect(() => {
+    if (isMounted) {
+      if (!hasEntered) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "unset";
+      }
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [hasEntered, isMounted]);
+
+  const handleEnterSystem = () => {
+    setHasEntered(true);
+    setHasInteracted(true);
+    if (audioRef.current && !isMuted) {
+      audioRef.current.play()
+        .then(() => {
+          console.log("Audio successfully started on Welcome Enter click!");
+        })
+        .catch((err) => {
+          console.log("Failed to play on Welcome Enter click:", err);
+        });
+    }
+  };
 
   // Sync mute state and volume settings
   useEffect(() => {
@@ -44,25 +83,37 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
 
   // First user interaction listener to trigger autoplay if blocked
   useEffect(() => {
-    if (!isMounted) return;
-    const handleFirstInteraction = () => {
-      if (!hasInteracted) {
-        setHasInteracted(true);
-        if (audioRef.current && !isMuted) {
-          audioRef.current.play().catch((err) => console.log("Play failed on first interaction:", err));
-        }
+    if (!isMounted || hasInteracted) return;
+
+    const tryPlayAndCleanup = () => {
+      if (audioRef.current && !isMuted) {
+        audioRef.current.play()
+          .then(() => {
+            console.log("Audio successfully started on user interaction!");
+            setHasInteracted(true);
+            cleanup();
+          })
+          .catch((err) => {
+            console.log("Play failed on interaction, will try next event:", err);
+          });
       }
     };
 
-    window.addEventListener("click", handleFirstInteraction);
-    window.addEventListener("scroll", handleFirstInteraction);
-    window.addEventListener("keydown", handleFirstInteraction);
-
-    return () => {
-      window.removeEventListener("click", handleFirstInteraction);
-      window.removeEventListener("scroll", handleFirstInteraction);
-      window.removeEventListener("keydown", handleFirstInteraction);
+    const cleanup = () => {
+      window.removeEventListener("click", tryPlayAndCleanup);
+      window.removeEventListener("keydown", tryPlayAndCleanup);
+      window.removeEventListener("mousedown", tryPlayAndCleanup);
+      window.removeEventListener("pointerdown", tryPlayAndCleanup);
+      window.removeEventListener("touchstart", tryPlayAndCleanup);
     };
+
+    window.addEventListener("click", tryPlayAndCleanup);
+    window.addEventListener("keydown", tryPlayAndCleanup);
+    window.addEventListener("mousedown", tryPlayAndCleanup);
+    window.addEventListener("pointerdown", tryPlayAndCleanup);
+    window.addEventListener("touchstart", tryPlayAndCleanup);
+
+    return cleanup;
   }, [hasInteracted, isMuted, isMounted]);
 
   // Cycle to the next song when current track ends
@@ -206,7 +257,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
 
             {/* Direct Status banner */}
             <div className="border-2 border-black bg-black text-white px-3 py-1.5 font-mono text-xs uppercase tracking-wider font-extrabold shadow-[2px_2px_0px_#3300FF]">
-              // SYSTEM_OPERATIONAL ★★★★
+              {"// SYSTEM_OPERATIONAL ★★★★"}
             </div>
 
             {/* Currently Playing Song Banner */}
@@ -241,6 +292,13 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
           onEnded={handleAudioEnded}
         />
       )}
+
+      {/* WELCOME SYSTEM OVERLAY SPLASH SCREEN */}
+      <WelcomeScreen
+        hasEntered={hasEntered}
+        isMounted={isMounted}
+        onEnter={handleEnterSystem}
+      />
 
     </div>
   );
