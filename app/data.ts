@@ -36,7 +36,16 @@ export const PROJECTS_DATA: Project[] = [
     demoUrl: "https://my-ip.jordan10001.workers.dev/"
   },
   {
-    id: "coming soon2",
+    id: "project2",
+    name: "p2p-transfer",
+    description: "LAN-based file transfer application.",
+    image: "projects/p2p-transfer.png", 
+    badges: ["Go", "Lan", "Fiber"],
+    githubUrl: "https://github.com/Jordan10001/p2p-tf",
+    demoUrl: ""
+  },
+  {
+    id: "project3",
     name: "coming soon",
     description: "coming soon",
     image: "projects/coming-soon.png", 
@@ -45,16 +54,7 @@ export const PROJECTS_DATA: Project[] = [
     demoUrl: ""
   },
   {
-    id: "coming soon3",
-    name: "coming soon",
-    description: "coming soon",
-    image: "projects/coming-soon.png", 
-    badges: ["Database", "Cpu", "FileText", "Share2"],
-    githubUrl: "https://github.com/jordan10001",
-    demoUrl: ""
-  },
-  {
-    id: "coming soon4",
+    id: "project4",
     name: "coming soon",
     description: "coming soon",
     image: "projects/coming-soon.png", 
